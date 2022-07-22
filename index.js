@@ -1,13 +1,13 @@
 'use strict';
 
-const getTitle = document.querySelector('.modal__title');
-console.log(getTitle);
+const modalTitle = document.querySelector('.modal__title');
+console.log(modalTitle);
 
-const getForm = document.querySelector('.modal__form');
-console.log(getForm);
+const modalForm = document.querySelector('.modal__form');
+console.log(modalForm);
 
-const getCheckbox = document.getElementById('discount')
-console.log(getCheckbox);
+const getDiscount = document.getElementById('discount')
+console.log(getDiscount);
 
-const nextElemcheckbox = getCheckbox.nextElementSibling
-console.log(nextElem);
+const nextElemDiscount = getDiscount.nextElementSibling
+console.log(nextElemDiscount);
