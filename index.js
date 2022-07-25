@@ -119,11 +119,11 @@ btnPict.classList.add('table__btn', 'table__btn_pic');
 td_8.appendChild(btnPict);
 
 const btnEdit = document.createElement('button');
-btnPict.classList.add('table__btn', 'table__btn_edit');
+btnEdit.classList.add('table__btn', 'table__btn_edit');
 td_8.appendChild(btnEdit);
 
 const btnDel = document.createElement('button');
-btnPict.classList.add('table__btn', 'table__btn_del');
+btnDel.classList.add('table__btn', 'table__btn_del');
 td_8.appendChild(btnDel);
 tr.appendChild(td_8);
 
