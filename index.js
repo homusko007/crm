@@ -1,8 +1,5 @@
 'use strict';
 
-const classDelete = document.querySelector('.overlay');
-classDelete.classList.toggle('active');
-
 const goods = [
   {
     "num": 1,
@@ -137,6 +134,27 @@ const renderGoods = (arr) => {
     tableBody.append(row);
   }
 }
-
-
 renderGoods(goods);
+
+const modalWindow = document.querySelector('.overlay');
+const btnAdd = document.querySelector('.panel__add-goods');
+const btnClose = document.querySelector('.modal__close');
+const overlayModal = document.querySelector('.overlay__modal');
+
+
+
+btnAdd.addEventListener('click', () => {
+  modalWindow.classList.add('active');
+});
+
+overlayModal.addEventListener('click', event => {
+  event.stopPropagation();
+})
+
+modalWindow.addEventListener('click', () => {
+  modalWindow.classList.remove('active');
+});
+
+btnClose.addEventListener("click", () => {
+  modalWindow.classList.remove('active');
+});
