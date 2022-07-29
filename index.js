@@ -64,7 +64,8 @@ const tableBody = document.querySelector('tbody')
 const lastNum = document.querySelector('tbody').lastElementChild.firstElementChild.textContent;
 
 const createRow = (obj) => {
-  const tr = document.createElement('tr')
+  const tr = document.createElement('tr');
+  tr.className ='good-item';
 
   const td_1 = document.createElement('td');
   td_1.className = 'table__cell';
@@ -96,13 +97,13 @@ const createRow = (obj) => {
 
   const td_5 = document.createElement('td');
   td_5.className = 'table__cell';
-  td_5.textContent = obj.price;
-  tr.appendChild(td_5)
+  td_5.textContent = obj.count;
+  tr.appendChild(td_5);
 
   const td_6 = document.createElement('td');
   td_6.className = 'table__cell';
-  td_6.textContent = obj.count;
-  tr.appendChild(td_6);
+  td_6.textContent =`$${obj.price}`;
+  tr.appendChild(td_6)
 
   const td_7 = document.createElement('td');
   td_7.className = 'table__cell';
@@ -142,19 +143,23 @@ const btnClose = document.querySelector('.modal__close');
 const overlayModal = document.querySelector('.overlay__modal');
 
 
-
 btnAdd.addEventListener('click', () => {
   modalWindow.classList.add('active');
 });
 
-overlayModal.addEventListener('click', event => {
-  event.stopPropagation();
-})
-
-modalWindow.addEventListener('click', () => {
-  modalWindow.classList.remove('active');
+modalWindow.addEventListener('click', (e) => {
+  const target = e.target;
+  if (target === modalWindow || 
+      target.closest('.modal__close')) {
+      modalWindow.classList.remove('active');
+      console.log(target);
+  }
 });
 
-btnClose.addEventListener("click", () => {
-  modalWindow.classList.remove('active');
+
+tableBody.addEventListener('click', e => {
+  const target = e.target;
+ if (target.closest('.table__btn_del')) {
+   target.closest('.good-item').remove();   
+  }
 });
