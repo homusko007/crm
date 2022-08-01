@@ -1,5 +1,11 @@
 'use strict';
 
+const tableBody = document.querySelector('tbody')
+const modalWindow = document.querySelector('.overlay');
+const btnAdd = document.querySelector('.panel__add-goods');
+const btnClose = document.querySelector('.modal__close');
+const overlayModal = document.querySelector('.overlay__modal');
+
 const goods = [
   {
     "num": 1,
@@ -60,16 +66,16 @@ const goods = [
 
 ]
 
-const tableBody = document.querySelector('tbody')
-const lastNum = document.querySelector('tbody').lastElementChild.firstElementChild.textContent;
 
 const createRow = (obj) => {
   const tr = document.createElement('tr');
-  tr.className ='good-item';
+  //tr.className ='good-item';
 
   const td_1 = document.createElement('td');
   td_1.className = 'table__cell';
-  td_1.textContent = obj.num + Number(lastNum);
+  const lastRow = tableBody.lastElementChild;
+  const lastNum = Number(lastRow.firstElementChild.textContent);
+  td_1.textContent = 1 + lastNum;
   tr.appendChild(td_1);
 
   const td_2 = document.createElement('td');
@@ -135,13 +141,8 @@ const renderGoods = (arr) => {
     tableBody.append(row);
   }
 }
+
 renderGoods(goods);
-
-const modalWindow = document.querySelector('.overlay');
-const btnAdd = document.querySelector('.panel__add-goods');
-const btnClose = document.querySelector('.modal__close');
-const overlayModal = document.querySelector('.overlay__modal');
-
 
 btnAdd.addEventListener('click', () => {
   modalWindow.classList.add('active');
@@ -152,14 +153,27 @@ modalWindow.addEventListener('click', (e) => {
   if (target === modalWindow || 
       target.closest('.modal__close')) {
       modalWindow.classList.remove('active');
-      console.log(target);
-  }
+    }
 });
 
+const deleteBtn = document.querySelectorAll('.table__btn_del');
+deleteBtn.forEach(btn => {
+      btn.addEventListener('click', () => {
+       const row = btn.closest('tr');
+       row.parentNode.removeChild(row);
+       const idRow = row.children[1].getAttribute('data-id');
+       
+       const getNewArray = (arr) => {arr.forEach(el => {
+        for (const key in el) {
+         if (el[key] == idRow){
+          const index = arr.indexOf(el);
+          const NewArr = arr.splice(index, 1);
+          console.log(goods);
+          };
+         };
+         })};
+       getNewArray(goods)
+        });
+      });
 
-tableBody.addEventListener('click', e => {
-  const target = e.target;
- if (target.closest('.table__btn_del')) {
-   target.closest('.good-item').remove();   
-  }
-});
+
