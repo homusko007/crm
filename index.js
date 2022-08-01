@@ -167,8 +167,8 @@ deleteBtn.forEach(btn => {
         for (const key in el) {
          if (el[key] == idRow){
           const index = arr.indexOf(el);
-          const NewArr = arr.splice(index, 1);
-          console.log(goods);
+          arr.splice(index, 1);
+          console.log(arr);
           };
          };
          })};
