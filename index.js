@@ -5,77 +5,109 @@ const modalWindow = document.querySelector('.overlay');
 const btnAdd = document.querySelector('.panel__add-goods');
 const btnClose = document.querySelector('.modal__close');
 const overlayModal = document.querySelector('.overlay__modal');
+const form = document.querySelector('.modal__form');
+const tableTotal = document.querySelector('.crm__total-price');
 
 const goods = [
   {
-    "num": 1,
-    "id": 1111111111111111,
-    "title": "Смартфон Xiaomi 11T 8/128GB",
-    "category": "mobile-phone",
+
+    "id": 24601654816512,
+    "name": "Навигационная система Soundmax",
+    "category": "Техника для дома",
     "units": "шт",
-    "price": 27000,
-    "count": 3,
-    "total": 0,
+    "price": 100,
+    "count": 5,
     "images": {
       "small": "img/smrtxiaomi11t-m.jpg",
       "big": "img/smrtxiaomi11t-b.jpg"
     }
   },
   {
-    "num": 2,
-    "id": 2222222222222,
-    "title": "Радиоуправляемый автомобиль Cheetan",
-    "category": "toys",
+
+    "id": 24601654816512,
+    "name": "Телевизор DEXP",
+    "price": 1000,
+    "description": 0,
+    "category": "Техника для дома",
+    "discont": false,
+    "count": 15,
     "units": "шт",
+    "images": {
+      "small": "img/smrtxiaomi11t-m.jpg",
+      "big": "img/smrtxiaomi11t-b.jpg"
+    }
+  },
+
+  {
+    "id": 1,
+    "name": "Смартфон Xiaomi 11T 8/128GB",
+    "price": 27000,
+    "description": "Смартфон Xiaomi 11T – это представитель флагманской линейки, выпущенной во второй половине 2021 года. И он полностью соответствует такому позиционированию, предоставляя своим обладателям возможность пользоваться отличными камерами, ни в чем себя не ограничивать при запуске игр и других требовательных приложений.",
+    "category": "mobile-phone",
+    "discont": false,
+    "count": 3,
+    "units": "шт",
+    "images": {
+      "small": "img/smrtxiaomi11t-m.jpg",
+      "big": "img/smrtxiaomi11t-b.jpg"
+    }
+  },
+  {
+    "id": 2,
+    "name": "Радиоуправляемый автомобиль Cheetan",
     "price": 4000,
+    "description": "Внедорожник на дистанционном управлении. Скорость 25км/ч. Возраст 7 - 14 лет",
+    "category": "toys",
+    "discont": 5,
     "count": 1,
-    "total": 0,
+    "units": "шт",
     "images": {
       "small": "img/cheetancar-m.jpg",
       "big": "img/cheetancar-b.jpg"
     }
   },
   {
-    "num": 3,
-    "id": 33333333333333,
-    "title": "ТВ приставка MECOOL KI",
-    "category": "tv-box",
-    "units": "шт",
+    "id": 3,
+    "name": "ТВ приставка MECOOL KI",
     "price": 12400,
+    "description": "Всего лишь один шаг сделает ваш телевизор умным, Быстрый и умный MECOOL KI PRO, прекрасно спроектированный, сочетает в себе прочный процессор Cortex-A53 с чипом Amlogic S905D",
+    "category": "tv-box",
+    "discont": 15,
     "count": 4,
-    "total": 0,
+    "units": "шт",
     "images": {
       "small": "img/tvboxmecool-m.jpg",
       "big": "img/tvboxmecool-b.jpg"
     }
   },
   {
-    "num": 4,
-    "id": 44444444444444,
-    "title": "Витая пара PROConnect 01-0043-3-25",
-    "category": "cables",
-    "units": "v",
+    "id": 4,
+    "name": "Витая пара PROConnect 01-0043-3-25",
     "price": 22,
+    "description": "Витая пара Proconnect 01-0043-3-25 является сетевым кабелем с 4 парами проводов типа UTP, в качестве проводника в которых используется алюминий, плакированный медью CCA. Такая неэкранированная витая пара с одножильными проводами диаметром 0.50 мм широко применяется в процессе сетевых монтажных работ. С ее помощью вы сможете обеспечить развертывание локальной сети в домашних условиях или на предприятии, объединить все необходимое вам оборудование в единую сеть.",
+    "category": "cables",
+    "discont": false,
     "count": 420,
-    "total": 0,
+    "units": "v",
     "images": {
       "small": "img/lan_proconnect43-3-25.jpg",
       "big": "img/lan_proconnect43-3-25-b.jpg"
     }
   },
-
 ]
 
+const addGoodstData = (item) => {
+  item['id'] = Math.round(Math.random() * (1e15 + 1));
+  goods.push(item);
+  console.log('goods', goods);
+};
 
-const createRow = (obj) => {
+const createRow = (obj, i) => {
   const tr = document.createElement('tr');
-  //tr.className ='good-item';
 
   const td_1 = document.createElement('td');
   td_1.className = 'table__cell';
-  const lastRow = tableBody.lastElementChild;
-  const lastNum = Number(lastRow.firstElementChild.textContent);
-  td_1.textContent = 1 + lastNum;
+  td_1.textContent = i + 1;
   tr.appendChild(td_1);
 
   const td_2 = document.createElement('td');
@@ -84,10 +116,10 @@ const createRow = (obj) => {
   td_2.setAttribute('data-id', id);
   const span = document.createElement('span');
   span.classList.add('table__cell-id');
-  const spanText = `id: ${id}`;
+  const spanText = `id: ${obj.id}`;
   span.insertAdjacentText('afterbegin', spanText)
   td_2.appendChild(span);
-  const productName = obj.title;
+  const productName = obj.name;
   td_2.insertAdjacentText('beforeend', productName)
   tr.appendChild(td_2);
 
@@ -108,7 +140,7 @@ const createRow = (obj) => {
 
   const td_6 = document.createElement('td');
   td_6.className = 'table__cell';
-  td_6.textContent =`$${obj.price}`;
+  td_6.textContent = `$${obj.price}`;
   tr.appendChild(td_6)
 
   const td_7 = document.createElement('td');
@@ -133,47 +165,129 @@ const createRow = (obj) => {
   tr.appendChild(td_8);
 
   return tr;
-}
+};
+
+const addTotalPage = (total) => {
+  const allRow = tableBody.querySelectorAll('tr');
+  let sum = 0;
+  allRow.forEach(el => {
+    sum += Number(el.childNodes[6].innerHTML.slice(1));
+  });
+  total.textContent = `$${sum}`;
+};
 
 const renderGoods = (arr) => {
   for (let i = 0; i < arr.length; i++) {
-    const row = createRow(arr[i]);
+    const index = i;
+    const row = createRow(arr[i], index);
     tableBody.append(row);
-  }
-}
-
+    addTotalPage(tableTotal);
+  };
+};
 renderGoods(goods);
 
-btnAdd.addEventListener('click', () => {
-  modalWindow.classList.add('active');
-});
+const delGoods = () => {
+  const deleteBtn = document.querySelectorAll('.table__btn_del');
+  deleteBtn.forEach(btn => {
+    btn.addEventListener('click', () => {
+      const row = btn.closest('tr');
+      row.parentNode.removeChild(row);
 
-modalWindow.addEventListener('click', (e) => {
-  const target = e.target;
-  if (target === modalWindow || 
-      target.closest('.modal__close')) {
-      modalWindow.classList.remove('active');
-    }
-});
-
-const deleteBtn = document.querySelectorAll('.table__btn_del');
-deleteBtn.forEach(btn => {
-      btn.addEventListener('click', () => {
-       const row = btn.closest('tr');
-       row.parentNode.removeChild(row);
-       const idRow = row.children[1].getAttribute('data-id');
-       
-       const getNewArray = (arr) => {arr.forEach(el => {
-        for (const key in el) {
-         if (el[key] == idRow){
-          const index = arr.indexOf(el);
-          arr.splice(index, 1);
-          console.log(arr);
+      const idRow = row.children[1].getAttribute('data-id');
+      const getNewArray = (arr) => {
+        arr.forEach(el => {
+          for (const key in el) {
+            if (el[key] == idRow) {
+              const index = arr.indexOf(el);
+              arr.splice(index, 1);
+              console.log(arr);
+            };
           };
-         };
-         })};
-       getNewArray(goods)
-        });
-      });
+        })
+      };
+      getNewArray(goods)
+    });
+  });
+};
 
 
+console.log(tableBody);
+delGoods();
+
+const modalControl = (btnAdd, modalWindow) => {
+  const openModal = () => {
+    modalWindow.classList.add('active');
+    const modalId = document.querySelector('.vendor-code__id');
+    modalId.textContent = Math.round(Math.random() * (1e15 + 1));
+  };
+
+  const closeModal = () => {
+    modalWindow.classList.remove('active');
+  };
+
+  btnAdd.addEventListener('click', openModal);
+
+  modalWindow.addEventListener('click', (e) => {
+    const target = e.target;
+    if (target === modalWindow ||
+      target.closest('.modal__close')) {
+      closeModal();
+    }
+  });
+  return {
+    closeModal,
+    openModal,
+  };
+};
+const { closeModal } = modalControl(btnAdd, modalWindow);
+
+
+const formCheckbox = form.discount;
+const discount = formCheckbox.nextElementSibling;
+formCheckbox.addEventListener('click', () => {
+  if (formCheckbox.checked) {
+    discount.removeAttribute('disabled');
+  } else {
+    discount.value = '';
+    discount.setAttribute('disabled', 'disabled');
+  };
+});
+
+const inputs = document.querySelectorAll('.modal__input');
+inputs.forEach(el => {
+  el.setAttribute('required', 'required');
+});
+
+form.count.type = 'number';
+form.price.type = 'number';
+
+form.price.addEventListener('blur', e => {
+  e.target.form.total.value = `$${form.count.value * form.price.value}`;
+});
+
+form.count.addEventListener('blur', e => {
+  e.target.form.total.value = `$${form.count.value * form.price.value}`;
+});
+
+const addGoodsPage = (item, tableBody) => {
+  const lastRow = tableBody.lastElementChild;
+  const lastNum = Number(lastRow.firstElementChild.textContent);
+  tableBody.append(createRow(item, lastNum));
+  delGoods();
+};
+
+const formControl = (form, tableBody, closeModal) => {
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+
+    const newGood = Object.fromEntries(formData);
+    addGoodsPage(newGood, tableBody);
+    addGoodstData(newGood);
+    form.reset();
+    closeModal();
+    addTotalPage(tableTotal);
+  });
+};
+
+formControl(form, tableBody, closeModal);
