@@ -97,7 +97,6 @@ const goods = [
 ]
 
 const addGoodstData = (item) => {
-  item['id'] = Math.round(Math.random() * (1e15 + 1));
   goods.push(item);
   console.log('goods', goods);
 };
@@ -106,7 +105,7 @@ const createRow = (obj, i) => {
   const tr = document.createElement('tr');
 
   const td_1 = document.createElement('td');
-  td_1.className = 'table__cell';
+  td_1.classList.add('table__cell', 'table__cell_number');
   td_1.textContent = i + 1;
   tr.appendChild(td_1);
 
@@ -186,33 +185,38 @@ const renderGoods = (arr) => {
 };
 renderGoods(goods);
 
-const delGoods = () => {
+const delGoods = (arr) => {
   const deleteBtn = document.querySelectorAll('.table__btn_del');
   deleteBtn.forEach(btn => {
     btn.addEventListener('click', () => {
       const row = btn.closest('tr');
-      row.parentNode.removeChild(row);
+      row.remove();
+      addTotalPage(tableTotal);
+      const rowNumber = tableBody.querySelectorAll('.table__cell_number');
+      for (let i = 0; i < rowNumber.length; i++) {
+        rowNumber[i].textContent = `${i + 1}`
+      }
 
       const idRow = row.children[1].getAttribute('data-id');
-      const getNewArray = (arr) => {
+     
+     const getNewArray = (arr) => {
         arr.forEach(el => {
           for (const key in el) {
             if (el[key] == idRow) {
               const index = arr.indexOf(el);
               arr.splice(index, 1);
-              console.log(arr);
             };
           };
         })
       };
-      getNewArray(goods)
+    const newArr = getNewArray(goods);
+     console.log(newArr);
     });
   });
 };
 
+delGoods(goods);
 
-console.log(tableBody);
-delGoods();
 
 const modalControl = (btnAdd, modalWindow) => {
   const openModal = () => {
@@ -282,6 +286,8 @@ const formControl = (form, tableBody, closeModal) => {
     const formData = new FormData(e.target);
 
     const newGood = Object.fromEntries(formData);
+    newGood['id'] = document.querySelector('.vendor-code__id').textContent;
+
     addGoodsPage(newGood, tableBody);
     addGoodstData(newGood);
     form.reset();
