@@ -143,8 +143,8 @@ const createRow = (obj, i) => {
   tr.appendChild(td_6)
 
   const td_7 = document.createElement('td');
-  td_7.className = 'table__cell';
-  td_7.textContent = `${obj.price * obj.count}`;
+  td_7.classList.add('table__cell', 'table__cell_totat');
+  td_7.textContent = `$${obj.price * obj.count}`;
   tr.appendChild(td_7);
 
   const td_8 = document.createElement('td');
@@ -166,13 +166,13 @@ const createRow = (obj, i) => {
   return tr;
 };
 
-const addTotalPage = (total) => {
+const addTotalPage = () => {
   const allRow = tableBody.querySelectorAll('tr');
   let sum = 0;
   allRow.forEach(el => {
-    sum += Number(el.childNodes[6].innerHTML);
+    sum += Number(el.childNodes[6].innerHTML.slice(1));
   });
-  total.textContent = `$${sum}`;
+  tableTotal.textContent = `$${sum}`;
 };
 
 const renderGoods = (arr) => {
@@ -180,49 +180,35 @@ const renderGoods = (arr) => {
     const index = i;
     const row = createRow(arr[i], index);
     tableBody.append(row);
-    addTotalPage(tableTotal);
+    addTotalPage();
   };
-};
-renderGoods(goods);
 
-const delGoods = (arr) => {
-  const deleteBtn = document.querySelectorAll('.table__btn_del');
-  deleteBtn.forEach(btn => {
-    btn.addEventListener('click', () => {
-      const row = btn.closest('tr');
-      row.remove();
-      addTotalPage(tableTotal);
-      const rowNumber = tableBody.querySelectorAll('.table__cell_number');
-      for (let i = 0; i < rowNumber.length; i++) {
-        rowNumber[i].textContent = `${i + 1}`
-      }
-
-      const idRow = row.children[1].getAttribute('data-id');
-     
-     const getNewArray = (arr) => {
-        arr.forEach(el => {
-          for (const key in el) {
-            if (el[key] == idRow) {
-              const index = arr.indexOf(el);
-              arr.splice(index, 1);
-            };
-          };
-        })
-      };
-    const newArr = getNewArray(goods);
-     console.log(newArr);
-    });
+  tableBody.addEventListener('click', e => {
+    const target = e.target;
+    if (target.closest('.table__btn_del')) {
+      const delRow = target.closest('tr');
+      delRow.remove();
+      const idRow = Number(delRow.children[1].getAttribute('data-id'));
+      const i = arr.findIndex((el) => el.id === idRow);
+      arr.splice(i, 1);
+      console.log(arr);
+    }
+    addTotalPage();
+    const rowNumber = tableBody.querySelectorAll('.table__cell_number');
+    for (let i = 0; i < rowNumber.length; i++) {
+      rowNumber[i].textContent = `${i + 1}`
+    }
   });
-};
+}
 
-delGoods(goods);
-
+renderGoods(goods)
 
 const modalControl = (btnAdd, modalWindow) => {
   const openModal = () => {
     modalWindow.classList.add('active');
     const modalId = document.querySelector('.vendor-code__id');
     modalId.textContent = Math.round(Math.random() * (1e15 + 1));
+    return modalId
   };
 
   const closeModal = () => {
@@ -244,7 +230,6 @@ const modalControl = (btnAdd, modalWindow) => {
   };
 };
 const { closeModal } = modalControl(btnAdd, modalWindow);
-
 
 const formCheckbox = form.discount;
 const discount = formCheckbox.nextElementSibling;
@@ -277,7 +262,7 @@ const addGoodsPage = (item, tableBody) => {
   const lastRow = tableBody.lastElementChild;
   const lastNum = Number(lastRow.firstElementChild.textContent);
   tableBody.append(createRow(item, lastNum));
-  delGoods();
+  //delGoods();
 };
 
 const formControl = (form, tableBody, closeModal) => {
@@ -292,8 +277,9 @@ const formControl = (form, tableBody, closeModal) => {
     addGoodstData(newGood);
     form.reset();
     closeModal();
-    addTotalPage(tableTotal);
+    addTotalPage();
   });
 };
 
 formControl(form, tableBody, closeModal);
+
