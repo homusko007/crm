@@ -144,7 +144,7 @@ const createRow = (obj, i) => {
 
   const td_7 = document.createElement('td');
   td_7.className = 'table__cell';
-  td_7.textContent = `$${obj.price * obj.count}`;
+  td_7.textContent = `${obj.price * obj.count}`;
   tr.appendChild(td_7);
 
   const td_8 = document.createElement('td');
@@ -170,7 +170,7 @@ const addTotalPage = (total) => {
   const allRow = tableBody.querySelectorAll('tr');
   let sum = 0;
   allRow.forEach(el => {
-    sum += Number(el.childNodes[6].innerHTML.slice(1));
+    sum += Number(el.childNodes[6].innerHTML);
   });
   total.textContent = `$${sum}`;
 };
