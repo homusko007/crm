@@ -7,14 +7,11 @@ const goods = [
       "units": "шт",
       "price": 100,
       "count": 5,
-      "images": {
-        "small": "img/smrtxiaomi11t-m.jpg",
-        "big": "img/smrtxiaomi11t-b.jpg"
-      }
-    },
+      "images": "https://image.shutterstock.com/image-photo/kiev-ukraine-july-15-2021-600w-2117494346.jpg",
+      },
     {
   
-      "id": 24601654816512,
+      "id": 24601654816513,
       "name": "Телевизор DEXP",
       "price": 1000,
       "description": 0,
@@ -22,10 +19,7 @@ const goods = [
       "discont": false,
       "count": 15,
       "units": "шт",
-      "images": {
-        "small": "img/smrtxiaomi11t-m.jpg",
-        "big": "img/smrtxiaomi11t-b.jpg"
-      }
+      "images": "https://images.pexels.com/photos/5202925/pexels-photo-5202925.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     },
   
     {
@@ -37,11 +31,9 @@ const goods = [
       "discont": false,
       "count": 3,
       "units": "шт",
-      "images": {
-        "small": "img/smrtxiaomi11t-m.jpg",
-        "big": "img/smrtxiaomi11t-b.jpg"
-      }
-    },
+      "images": "https://image.shutterstock.com/image-vector/black-smartphone-white-screen-menu-600w-517144990.jpg",
+      },
+
     {
       "id": 2,
       "name": "Радиоуправляемый автомобиль Cheetan",
@@ -51,24 +43,18 @@ const goods = [
       "discont": 5,
       "count": 1,
       "units": "шт",
-      "images": {
-        "small": "img/cheetancar-m.jpg",
-        "big": "img/cheetancar-b.jpg"
-      }
+      "images": "https://images.pexels.com/photos/9227215/pexels-photo-9227215.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     },
     {
       "id": 3,
-      "name": "ТВ приставка MECOOL KI",
+      "name": "Игровая приставка SONY",
       "price": 12400,
       "description": "Всего лишь один шаг сделает ваш телевизор умным, Быстрый и умный MECOOL KI PRO, прекрасно спроектированный, сочетает в себе прочный процессор Cortex-A53 с чипом Amlogic S905D",
       "category": "tv-box",
       "discont": 15,
       "count": 4,
       "units": "шт",
-      "images": {
-        "small": "img/tvboxmecool-m.jpg",
-        "big": "img/tvboxmecool-b.jpg"
-      }
+      "images": "https://images.pexels.com/photos/4219883/pexels-photo-4219883.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
     },
     {
       "id": 4,
@@ -79,9 +65,6 @@ const goods = [
       "discont": false,
       "count": 420,
       "units": "v",
-      "images": {
-        "small": "img/lan_proconnect43-3-25.jpg",
-        "big": "img/lan_proconnect43-3-25-b.jpg"
-      }
-    },
+      "images": "https://images.pexels.com/photos/3541555/pexels-photo-3541555.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1",
+      },
   ];

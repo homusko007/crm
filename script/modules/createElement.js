@@ -51,6 +51,8 @@ export const createRow = (obj, i) => {
 
   const btnPict = document.createElement('button');
   btnPict.classList.add('table__btn', 'table__btn_pic');
+  const url = obj.images;
+  btnPict.setAttribute('data-pic', url);
   td_8.appendChild(btnPict);
 
   const btnEdit = document.createElement('button');
@@ -75,11 +77,12 @@ export const renderGoods = (arr, tableBody) => {
 
   tableBody.addEventListener('click', e => {
     const target = e.target;
+    const row = target.closest('tr');
+    const rowId = Number(row.children[1].getAttribute('data-id'));
+    const i = arr.findIndex((el) => el.id === rowId);
+
     if (target.closest('.table__btn_del')) {
-      const delRow = target.closest('tr');
-      delRow.remove();
-      const idRow = Number(delRow.children[1].getAttribute('data-id'));
-      const i = arr.findIndex((el) => el.id === idRow);
+      row.remove();
       arr.splice(i, 1);
       console.log(arr);
     };
@@ -87,6 +90,13 @@ export const renderGoods = (arr, tableBody) => {
     const rowNumber = tableBody.querySelectorAll('.table__cell_number');
     for (let i = 0; i < rowNumber.length; i++) {
       rowNumber[i].textContent = `${i + 1}`
+    }
+
+    if (target.closest('.table__btn_pic')) {
+      const pict = arr[i].images;
+      var x = screen.width/2 - 800/2;
+      var y = screen.height/2 - 600/2;
+      const win = open(`${pict}`, '', `width=800, height=600, left=${x}, top=${y}`);
     }
   });
 };
