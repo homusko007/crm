@@ -35,16 +35,7 @@ export const formSetting = (form) => {
         fieldset.append(image);
     };
 
-    const warnText = document.createElement('div');
-    warnText.style.cssText = `
-    color: red;
-    font-size: 14px;
-    font-weight: 600;
-    text-align: center;
-    display: none;
-    `;
-    warnText.textContent = "ИЗОБРАЖЕНИЕ НЕ ДОЛЖНО ПРЕВЫШАТЬ 1 МБ"
-
+    const file = document.querySelector('.modal__file');
     const toBase64 = file => new Promise((resolve, reject) => {
         const reader = new FileReader();
         reader.addEventListener('loadend', () => {
@@ -58,24 +49,31 @@ export const formSetting = (form) => {
         reader.readAsDataURL(file);
     });
 
-    const file = document.querySelector('.modal__file');
+    const warnText = document.createElement('div');
+    warnText.style.cssText = `
+    color: red;
+    font-size: 15px;
+    font-weight: 600;
+    text-align: center;
+    display: flex; 
+    align-items: flex-end;
+    `;
+    warnText.textContent = "ИЗОБРАЖЕНИЕ НЕ ДОЛЖНО ПРЕВЫШАТЬ 1 МБ";
+
     file.addEventListener('change', async () => {
-        console.log(file.files[0].size);
-        if (file.files.length > 0 && file.files[0].size <= 1000) {
-            warnText.style.display = 'none';
+        if (file.files.length > 0 && file.files[0].size <= 1024) {
+            warnText.remove();
             const src = URL.createObjectURL(file.files[0]);
             createPreview();
             const preview = document.querySelector('.preview');
             preview.parentElement.style.display = 'block';
             preview.src = src;
         }
-        else if (file.files.length > 0 && file.files[0].size > 1000) {
+        else if (file.files.length > 0 && file.files[0].size > 1024) {
             if (fieldset.contains(document.querySelector('.image-container'))) {
                 document.querySelector('.image-container').style.display = 'none';
             }
-            warnText.style.display = 'block';
             file.before(warnText);
         }
     });
-
 };
