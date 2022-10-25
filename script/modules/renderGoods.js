@@ -1,4 +1,34 @@
-import { addTotalPage } from "./addInfo.js";
+import { addTotalPage } from "./addInfoPage.js";
+
+const tableBody = document.querySelector('tbody');
+
+export const fetchRequest = async (url, {
+  method = 'get',
+  callback,
+  body,
+  headers,
+}) => {
+  try {
+    const options = {
+      method,
+    }
+
+    if (body) options.body = JSON.stringify(body);
+    if (headers) options.headers = headers;
+
+    const response = await fetch(url, options);
+
+    if (response.ok) {
+      const data = await response.json();
+      if (callback) return callback(null, data);
+      return;
+    }
+    throw new Error(`Ошибка ${response.status}: ${response.statusText}`);
+
+  } catch (err) {
+    callback(err);
+  }
+};
 
 export const createRow = (obj, i) => {
   const tr = document.createElement('tr');
@@ -17,7 +47,7 @@ export const createRow = (obj, i) => {
   const spanText = `id: ${obj.id}`;
   span.insertAdjacentText('afterbegin', spanText)
   td_2.appendChild(span);
-  const productName = obj.name;
+  const productName = obj.title || obj.name;
   td_2.insertAdjacentText('beforeend', productName)
   tr.appendChild(td_2);
 
@@ -51,6 +81,8 @@ export const createRow = (obj, i) => {
 
   const btnPict = document.createElement('button');
   btnPict.classList.add('table__btn', 'table__btn_pic');
+  const pictData = obj.image;
+  btnPict.setAttribute('data-pict', pictData);
   td_8.appendChild(btnPict);
 
   const btnEdit = document.createElement('button');
@@ -65,29 +97,27 @@ export const createRow = (obj, i) => {
   return tr;
 };
 
-export const renderGoods = (arr, tableBody) => {
-  for (let i = 0; i < arr.length; i++) {
+export const renderGoods = (err, data) => {
+  if (err) {
+    console.warn(err);
+    return;
+  }
+  tableBody.textContent = '';
+
+  for (let i = 0; i < data.length; i++) {
     const index = i;
-    const row = createRow(arr[i], index);
+    const row = createRow(data[i], index);
     tableBody.append(row);
     addTotalPage(tableBody);
   };
+}
 
-  tableBody.addEventListener('click', e => {
-    const target = e.target;
-    if (target.closest('.table__btn_del')) {
-      const delRow = target.closest('tr');
-      delRow.remove();
-      const idRow = Number(delRow.children[1].getAttribute('data-id'));
-      const i = arr.findIndex((el) => el.id === idRow);
-      arr.splice(i, 1);
-      console.log(arr);
-    };
-    addTotalPage(tableBody);
-    const rowNumber = tableBody.querySelectorAll('.table__cell_number');
-    for (let i = 0; i < rowNumber.length; i++) {
-      rowNumber[i].textContent = `${i + 1}`
-    }
+export const loadGoods = () => {
+  fetchRequest('http://localhost:3000/api/goods', {
+    method: 'get',
+    callback: renderGoods,
+    headers: {
+      'Content-Type': 'application/json'
+    },
   });
 };
-

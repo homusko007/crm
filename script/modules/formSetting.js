@@ -19,15 +19,30 @@ export const formSetting = (form) => {
     form.price.type = 'number';
 
     form.price.addEventListener('blur', e => {
-        e.target.form.total.value = `$${form.count.value * form.price.value}`;
+        if (discount.hasAttribute('disabled')) {
+        e.target.form.total.value = `$${form.count.value * form.price.value}`
+        } else {
+            e.target.form.total.value = `$${(form.count.value * form.price.value) - ((form.count.value * form.price.value) * form.discount_count.value/100)}`  
+        }
     });
 
     form.count.addEventListener('blur', e => {
-        e.target.form.total.value = `$${form.count.value * form.price.value}`;
+        if (discount.hasAttribute('disabled')) {
+            e.target.form.total.value = `$${form.count.value * form.price.value}`
+            } else {
+                e.target.form.total.value = `$${(form.count.value * form.price.value) - ((form.count.value * form.price.value) * form.discount_count.value/100)}`  
+            }
+        });
+
+    form.discount_count.addEventListener('blur', e => {
+                if (discount.hasAttribute('disabled')) {
+                    e.target.form.total.value = `$${form.count.value * form.price.value}`
+                    } else {
+                        e.target.form.total.value = `$${(form.count.value * form.price.value) - ((form.count.value * form.price.value) * form.discount_count.value/100)}`  
+                    }
     });
 
-
-    const fieldset = document.querySelector('.modal__fieldset');
+   const fieldset = document.querySelector('.modal__fieldset');
     const createPreview = () => {
         const image = document.createElement('div');
         image.className = 'image-container';
@@ -36,20 +51,8 @@ export const formSetting = (form) => {
     };
 
     const file = document.querySelector('.modal__file');
-    const toBase64 = file => new Promise((resolve, reject) => {
-        const reader = new FileReader();
-        reader.addEventListener('loadend', () => {
-            resolve(reader.result);
-        });
 
-        reader.addEventListener('error', err => {
-            reject(err);
-        });
-
-        reader.readAsDataURL(file);
-    });
-
-    const warnText = document.createElement('div');
+   const warnText = document.createElement('div');
     warnText.style.cssText = `
     color: red;
     font-size: 15px;
@@ -60,7 +63,7 @@ export const formSetting = (form) => {
     `;
     warnText.textContent = "ИЗОБРАЖЕНИЕ НЕ ДОЛЖНО ПРЕВЫШАТЬ 1 МБ";
 
-    file.addEventListener('change', async () => {
+    file.addEventListener('change', () => {
         if (file.files.length > 0 && file.files[0].size <= 1024) {
             warnText.remove();
             const src = URL.createObjectURL(file.files[0]);

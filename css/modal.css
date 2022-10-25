@@ -4,7 +4,6 @@
   position: relative;
   padding: 32px 106px 39px;
   max-width: 792px;
-
 }
 
 .modal_top {
@@ -317,6 +316,20 @@
   margin: 0 auto;
 }
 
+.modal_text {
+font-family: 'Inter';
+font-weight: 700;
+font-size: 18px;
+line-height: 22px;
+letter-spacing: 0.1em;
+text-transform: uppercase;
+color: #6E6893;
+}
+
+.delete_btn_ok, .delete_btn_no {
+  padding: 10px 74px;
+  border-radius: 12px
+}
 
 @media (max-width: 1000px) {
   .modal__fieldset {
