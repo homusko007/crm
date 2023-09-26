@@ -20,7 +20,7 @@ const renderCategory = (err, data) => {
 };
 
 export const loadCategory = () => {
-    fetchRequest(`http://localhost:3000/api/category`, {
+    fetchRequest(`https://amazing-navy-pirate.glitch.me/api/categories`, {
         method: 'get',
         callback: renderCategory,
         headers: {

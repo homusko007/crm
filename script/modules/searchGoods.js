@@ -1,7 +1,7 @@
 import { fetchRequest, renderGoods, loadGoods } from "./renderGoods.js";
 
 const loadSearchGoods = (searchValue) => {
-    fetchRequest(`http://localhost:3000/api/goods/?search=${searchValue}`, {
+    fetchRequest(`https://amazing-navy-pirate.glitch.me/api/goods/?search=${searchValue}`, {
         method: 'get',
         callback: renderGoods,
         headers: {

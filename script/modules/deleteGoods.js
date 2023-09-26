@@ -11,7 +11,7 @@ export const deleteGoods = (tableBody) => {
 
             const agree = await openModalInfo();
             if (agree) {
-                fetchRequest(`http://localhost:3000/api/goods/${idGood}`, {
+                fetchRequest(`https://amazing-navy-pirate.glitch.me/api/goods/${idGood}`, {
                     method: 'DELETE',
                     callback(err) {
                         if (err) {

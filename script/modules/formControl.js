@@ -21,7 +21,7 @@ export const formControl = (form, closeModal, tableBody) => {
     newGood.id = document.querySelector('.vendor-code__id').textContent;
     newGood.image = await toBase64(newGood.image);
 
-    fetchRequest('http://localhost:3000/api/goods', {
+    fetchRequest('https://amazing-navy-pirate.glitch.me/api/goods', {
       method: 'POST',
       body: {
         id: newGood.id,

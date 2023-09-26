@@ -103,17 +103,18 @@ export const renderGoods = (err, data) => {
     return;
   }
   tableBody.textContent = '';
+  console.log(data);
 
-  for (let i = 0; i < data.length; i++) {
+  for (let i = 0; i < data.goods.length; i++) {
     const index = i;
-    const row = createRow(data[i], index);
+    const row = createRow(data.goods[i], index);
     tableBody.append(row);
     addTotalPage(tableBody);
   };
 }
 
 export const loadGoods = () => {
-  fetchRequest('http://localhost:3000/api/goods', {
+  fetchRequest('https://amazing-navy-pirate.glitch.me/api/goods', {
     method: 'get',
     callback: renderGoods,
     headers: {

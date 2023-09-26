@@ -9,7 +9,7 @@ export const loadEditModal = (idGood, closeModal, form, editRow, index) => {
       const newGood = Object.fromEntries(changeData);
       newGood.id = document.querySelector('.vendor-code__id').textContent;
       //newGood.image = await toBase64(newGood.image);
-      fetchRequest(`http://localhost:3000/api/goods/${newGood.id}`, {
+      fetchRequest(`https://amazing-navy-pirate.glitch.me/api/goods/${newGood.id}`, {
         method: 'PATCH',
         body: {
           id: newGood.id,
@@ -56,7 +56,7 @@ export const loadEditModal = (idGood, closeModal, form, editRow, index) => {
     sendData();
   };
 
-  fetchRequest(`http://localhost:3000/api/goods/${idGood}`, {
+  fetchRequest(`https://amazing-navy-pirate.glitch.me/api/goods/${idGood}`, {
     method: 'get',
     callback: renderModal,
   });

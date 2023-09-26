@@ -6,7 +6,7 @@ export const getImg = (tableBody) => {
             var y = (screen.height - 600) / 2;
 
             const btnPicUrl = target.closest('.table__btn_pic').getAttribute('data-pict');
-            open(`http://localhost:3000/${btnPicUrl}`, '', `width=800, height=600, left=${x}, top=${y}`);
+            open(`https://amazing-navy-pirate.glitch.me/${btnPicUrl}`, '', `width=800, height=600, left=${x}, top=${y}`);
 
             };
     })
